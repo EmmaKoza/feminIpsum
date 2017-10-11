@@ -17,11 +17,42 @@ function buildSentence(array) {
     array = array.slice(0, 3).join(' ') + '. ';
     //capitalize the first letter in the array
     array = array.charAt(0).toUpperCase() + array.slice(1);
-    console.log(array);
+    paragraph.push(array);
 }
 
-buildSentence(sentences);
-
 //go through the array 5 times per paragraph
+function buildParagraph() {
+    //generate random number for sentences in paragraph
+    var x = Math.floor(Math.random() * (6 - 3 + 1) + 3),
+        lines = '';
+    //make a sentences with x  amount of lines 
+    for (var i = 0; i < x; i++) {
+        buildSentence(sentences);
+    }
+    // console.log(paragraph);
+    writeParagraph(paragraph);
+};
+//helper function to normalize and then print paragraph to the page 
+function writeParagraph(array) {
+    array = array.toString().split(',').join('');
+    document.querySelector('.ipsum').innerHTML = '<p>' + array + '</p>';
+}
+
+//will build multiple paragraphs with the user's input
+function buildMultipleParagraphs(num) {
+    for (var i = 0; i < num; i++) {
+        buildParagraph();
+    }
+}
 
 //let the user decide how many paragraphs there will be
+function generateText() {
+    var form = document.querySelector('#paragraph-select');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var count = document.querySelector('#paragraph-count').value;
+        buildMultipleParagraphs(count);
+    });
+}
+
+generateText();
