@@ -9,6 +9,18 @@ var paragraph = [];
 
 //randomly sort through the array  
 //build the strings into sentences (capital first letter and .)
+function buildSentence(array) {
+    array.sort(function () {
+        return 0.5 - Math.random();
+    });
+    //build a sentence from the random strings
+    array = array.slice(0, 3).join(' ') + '. ';
+    //capitalize the first letter in the array
+    array = array.charAt(0).toUpperCase() + array.slice(1);
+    console.log(array);
+}
+
+buildSentence(sentences);
 
 //go through the array 5 times per paragraph
 
