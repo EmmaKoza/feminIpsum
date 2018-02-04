@@ -1,59 +1,31 @@
 "use strict";
 
-var sentences = ['sentence one words words ', 'sentence three yay yaya yaya ', 'heres another sentence ', 'sentence yay yay yay yay '];
-//paragraph array var for final ipsum
-var paragraphs = [];
-//array of all the sentences
-var feminipsum = {};
+var ipsumStrings = ['sentence one words words ', 'sentence three yay yaya yaya ', 'heres another sentence ', 'sentence yay yay yay yay '];
 
-//randomly sort through the array
-//build the strings into sentences (capital first letter and .)
-function buildSentence(array) {
-    array.sort(function () {
+function buildSentence() {
+    var sentenceText = ipsumStrings.slice().sort(function () {
         return 0.5 - Math.random();
-    });
-    //build a sentence from the random strings
-    array = array.slice(0, 3).join(' ') + '. ';
-    //capitalize the first letter in the array
-    array = array.charAt(0).toUpperCase() + array.slice(1);
-    paragraphs.push(array);
+    }).slice(0, 3).join(' ');
+
+    return sentenceText.charAt(0).toUpperCase() + sentenceText.slice(1);
 }
 
-//go through the array 5 times per paragraph
 function buildParagraph() {
-    //generate random number for sentences in paragraph
-    var x = Math.floor(Math.random() * (6 - 3 + 1) + 3),
+    var numSentences = Math.floor(Math.random() * (6 - 3 + 1) + 3),
         lines = '';
-    //make a sentences with x  amount of lines
-    for (var i = 0; i < x; i++) {
-        buildSentence(sentences);
+    var paragraph = '';
+    for (var i = 0; i < numSentences; i++) {
+        paragraph = paragraph + buildSentence();
     }
-    // console.log(paragraphs);
-    writeParagraph(paragraphs);
+    return paragraph;
 };
-//helper function to normalize and then print paragraph to the page
-function writeParagraph(array) {
-    array = array.toString().split(',').join('');
-    document.querySelector('.ipsum').innerHTML = document.querySelector('.ipsum').innerHTML + '<p>' + array + '</p>';
-}
 
-//will build multiple paragraphs with the user's input
-function buildMultipleParagraphs(num) {
-    paragraphs = [];
-    document.querySelector('.ipsum').innerHTML = '';
-    for (var i = 0; i < num; i++) {
-        buildParagraph();
+var form = document.querySelector('#paragraph-select');
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.querySelector('.ipsum').innerHtml = '';
+    var count = document.querySelector('#paragraph-count').value;
+    for (var i = 0; i < count; i++) {
+        document.querySelector('.ipsum').innerHTML += '<p>' + buildParagraph() + '</p>';
     }
-}
-
-//let the user decide how many paragraphs there will be
-function generateText() {
-    var form = document.querySelector('#paragraph-select');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var count = document.querySelector('#paragraph-count').value;
-        buildMultipleParagraphs(count);
-    });
-}
-
-generateText();
+});
