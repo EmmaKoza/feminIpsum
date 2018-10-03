@@ -135,14 +135,5 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 
 main {
   height: 100vh;
-  border: 20px solid #ff0000;
-  background-image: url(../images/bg-img.jpg);
   background-size: cover;
   background-position: center center; }
-
-h1 {
-  color: #fff;
-  background: #ff0000;
-  width: 220px;
-  padding: 10px;
-  text-align: center; }
